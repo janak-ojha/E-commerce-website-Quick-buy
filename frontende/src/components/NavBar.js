@@ -1,175 +1,129 @@
 import React, { useState } from 'react';
-import { Container, IconButton, Menu, MenuItem, Toolbar, Typography } from '@mui/material';
-import AppBar from "@mui/material/AppBar";
+import { AppBar, Box, Toolbar, IconButton, Typography, Container, InputBase } from '@mui/material';
+import ShoppingBagIcon from '@mui/icons-material/ShoppingBag';
 import SearchIcon from '@mui/icons-material/Search';
-import { NavLogo } from "../utils/styles";
-import Box from "@mui/material/Box";
-import { styled } from "styled-components";
-import {Login, Search} from "@mui/icons-material"
-import { Link, useNavigate } from "react-router-dom";
-import LocalMallIcon from "@mui/icons-material/LocalMall";
+import LogIcon from '../utils/navbar/LogIcon';
+import Categories from '../utils/navbar/Categories';
 
-const NavBar = () => {
-  const [searchOpen,setSearchOpen] = useState(false);
-  const [anchorElNav, setAnchorElNav] = React.useState(null);
-  const currentUser =null;
-  const navigate = useNavigate();
+const ResponsiveAppBar = () => {
+  const [searchOpen, setSearchOpen] = useState(false); // State for toggling search input
 
-  const handleOpenNavMenu=(event) =>{
-    setAnchorElNav(event.currentTarget);
-  }
 
-  const homeHandler =(e) =>{}
-
-  const handleCloseNavMenu =(e) =>{
-    setAnchorElNav(null);
-  }
-
-  const handleCloseUserMenu =(e) =>{}
+ 
+  // Toggle search input visibility
+  const toggleSearch = () => {
+    setSearchOpen(!searchOpen);
+  };
 
   return (
-    <AppBar position="sticky">
-      <Container maxWidth="xl" sx={{backgroundColor:"#4d1c9c"}}>
+    <AppBar position="static">
+      <Container maxWidth="xl" sx={{ backgroundColor: '#341f97' }}>
         <Toolbar disableGutters>
-         {/*mobile*/}
-         {searchOpen?<NavLogo
-            to="top"
-            activeClass="active"
-            spy={true}
-            smooth={true}
-            offset={-70}
-            duration={500}
-            onClick={() =>{setSearchOpen(false)}}
-         >
-          <p style={{fontSize:"15px",marginRight:"10px"}}>QB</p>
-         </NavLogo>:<Box sx={{flexGrow:1 , display:{xs: "flex" , md:"none"}}}>
-          <IconButton
-            size='large'
-            aria-label='account of current user'
-            aria-controls='menu-appbar'
-            aria-haspopup='true'
-            onClick={() =>{setSearchOpen(true)}}
-            color='inherit'
-          >
-            <SearchIcon/>
-          </IconButton>
-          </Box>}
-          <HomeContainer>
+          
+          {/* Mobile View */}
+          <Box sx={{ display: { xs: 'flex', md: 'none' }, alignItems: 'center', flexGrow: 1 }}>
+            
+            {/* If Search is open, show input box */}
+            {searchOpen ? (
+              <>
+                <Typography variant="h8" component="h8" marginRight="10px">
+                  QA
+                </Typography>
+                <Box sx={{ display: 'flex', alignItems: 'center', backgroundColor: 'white', borderRadius: 1 }}>
+                  <SearchIcon sx={{ ml: 1, color: 'black' }} />
+                  <InputBase
+                    sx={{ ml: 1, flex: 1 }}
+                    placeholder="Search your product"
+                    inputProps={{ 'aria-label': 'search your product' }}
+                  />
+                </Box>
+              </>
+            ) : (
+              <>
+                <IconButton onClick={toggleSearch} color="inherit">
+                  <SearchIcon />
+                </IconButton>
+                <ShoppingBagIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 2 }} />
+                <Typography
+                  variant="h6"
+                  noWrap
+                  component="a"
+                  href="#app-bar-with-responsive-menu"
+                  sx={{
+                    mr: 1,
+                    display: { xs: 'flex', md: 'none' },
+                    fontFamily: 'monospace',
+                    fontWeight: 600,
+                    letterSpacing: '.3rem',
+                    color: 'inherit',
+                    textDecoration: 'none',
+                  }}
+                >
+                  <p style={{ fontSize: '15px' }}>QuickBuy</p>
+                </Typography>
+              </>
+            )}
+            
+            <Box>
+              <LogIcon />
+            </Box>
+          </Box>
+
+          {/* Laptop View */}
+          <Box sx={{ display: { xs: 'none', md: 'flex' }, alignItems: 'center', flexGrow: 1 }}>
+            <ShoppingBagIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
             <Typography
-              variant='h5'
+              variant="h5"
               noWrap
+              component="a"
+              href="#app-bar-with-responsive-menu"
               sx={{
-                mr:2,
-                display:{xs:"flex" , md:"none"},
-                flexGrow:1,
-                fontFamily:"monospace",
-                fontWeight:700,
-                letterSpacing:".3rem",
-                color:"inherit",
-                textDecoration:"none"
+                mr: 2,
+                display: { xs: 'none', md: 'flex' },
+                flexGrow: 1,
+                fontFamily: 'monospace',
+                fontWeight: 700,
+                letterSpacing: '.3rem',
+                color: 'inherit',
+                textDecoration: 'none',
               }}
             >
-             {searchOpen?<Search/>:<NavLogo
-                 to="top"
-                 activeClass="active"
-                 spy={true}
-                 smooth={true}
-                 offset={-70}
-                 duration={500}
-                 onClick={homeHandler}
-               >
-                <p style={{fontSize:"15px"}}>QuickBuy</p>  
-              </NavLogo>}
+              Quick Buy
             </Typography>
-            </HomeContainer>
-            {currentUser === null && (
-              <Box sx={{flexGrow: 1, display:{xs:"flex" ,md:"none"}}}>
-                <>
-                  <IconButton
-                    size='large'
-                    aria-label="account of current user"
-                    aria-controls='menu-appbar'
-                    aria-haspopup="true"
-                    onClick={handleOpenNavMenu}
-                    color='inherit'
-                  >
-                   <Login/>
-                  </IconButton>
-                  <Menu
-                    id='menu-appbar'
-                    anchorEl={anchorElNav}
-                    anchorOrigin={{
-                      vertical:'bottom',
-                      horizontal:"left"
-                    }}
-                    keepMounted
-                    transformOrigin={{
-                      vertical:"top",
-                      horizontal:'left'
-                    }}
-                    open={Boolean(anchorElNav)}
-                    onClose={handleCloseNavMenu}
-                    onClick={handleCloseUserMenu}
-                    sx={{
-                      display:{xs:"block",md:"none"},
-                    }}
-                  >
-                    <MenuItem
-                     onClick={() =>{
-                      navigate("/logincustomer");
-                      handleCloseNavMenu();
-                     }}
-                    >
-                     <Typography textAlign="center" align='center'>
-                      Sign in as customer
-                     </Typography>
-                    </MenuItem>
-                    <div></div>
-                    <MenuItem
-                     onClick={() =>{
-                      navigate("/loginseller");
-                      handleCloseNavMenu();
-                     }}
-                    >
-                      <Typography textAlign="center" className='link'>
-                        Sign in as seller
-                      </Typography>
-                    </MenuItem>
-                  </Menu>
-                </>
-              </Box>
-            )}
 
-            {/* Desktop for */}
-            <HomeContainer>
-              <Typography
-                variant='h6'
-                noWrap
-                sx={{
-                  mr: 2,
-                  display: {sx:"none" ,md:'flex'},
-                  fontFamily: "monospace",
-                  fontWeight: 700,
-                  letterSpacing:".3rem",
-                  color: "inherit",
-                  textDecoration: "none",
-                }}
-              >
-               <NavLogo>
-                <LocalMallIcon sx={{ display: { xs: "none", md: "flex"}, mr:2,ml:1}}/>
-                 QuickBuy
-               </NavLogo>
-              </Typography>
-            </HomeContainer>
+            {/* Search Box */}
+            <Box
+              sx={{
+                display: 'flex',
+                marginRight: '8%',
+                alignItems: 'center',
+                backgroundColor: 'white',
+                borderRadius: 1,
+                flex: 12,
+              }}
+            >
+              <SearchIcon sx={{ ml: 1, color: 'black' }} />
+              <InputBase
+                sx={{ ml: 1, flex: 2 }}
+                placeholder="Search your product"
+                inputProps={{ 'aria-label': 'search your product' }}
+              />
+            </Box>
+
+            {/* Categories */}
+            <Box sx={{ marginRight: '100px' }}>
+              <Categories />
+            </Box>
+
+            {/* Log Icon */}
+            <Box>
+              <LogIcon style={{ marginRight: '100px' }} />
+            </Box>
+          </Box>
         </Toolbar>
       </Container>
     </AppBar>
   );
-}
+};
 
-export default NavBar;
-
-const HomeContainer = styled.div`
-  display: flex;
-  cursor: pointer;
-`;
+export default ResponsiveAppBar;

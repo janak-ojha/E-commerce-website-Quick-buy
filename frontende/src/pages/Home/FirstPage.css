@@ -1,0 +1,10 @@
+.over{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 25%;
+    height: 100vh; 
+    overflow: hidden;
+    width: 100%;
+}
