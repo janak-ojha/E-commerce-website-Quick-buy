@@ -31,6 +31,7 @@ const Home = () => {
      >
         Deal Of The Day
       </Typography>
+      <HomeCard/>
     </Box>
     <Box>
       <Typography 
@@ -39,6 +40,7 @@ const Home = () => {
       >
        Recommended Items 
       </Typography>
+      <HomeCard/>
     </Box>
     <Box>
       <Typography 
@@ -47,6 +49,7 @@ const Home = () => {
       >
         Discount For You
       </Typography>
+      <HomeCard/>
     </Box>
     <Box>
       <Typography 
@@ -55,6 +58,7 @@ const Home = () => {
       >
         Discount For You
       </Typography>
+      <HomeCard/>
     </Box>
     <Box>
       <Typography 
@@ -63,6 +67,7 @@ const Home = () => {
       >
         About us
       </Typography>
+      Janakojha2024@ccopyright
     </Box>
     </>
   )

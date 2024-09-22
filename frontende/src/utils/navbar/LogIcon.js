@@ -5,15 +5,26 @@ import MenuItem from '@mui/material/MenuItem';
 import Fade from '@mui/material/Fade';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import StorefrontIcon from '@mui/icons-material/Storefront';
+import { useNavigate } from 'react-router-dom';
 
 export default function FadeMenu() {
   const [anchorEl, setAnchorEl] = React.useState(null);
+  const navigate = useNavigate();
   const open = Boolean(anchorEl);
+
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
   const handleClose = () => {
     setAnchorEl(null);
+  };
+  const handleCustomerLogin = () => {
+    navigate('/loginCustomer');
+    handleClose(); // Close menu after navigation
+  };
+  const handleSellerLogin = () => {
+    navigate('/loginSeller');
+    handleClose(); // Close menu after navigation
   };
 
   return (
@@ -24,8 +35,8 @@ export default function FadeMenu() {
         aria-haspopup="true"
         aria-expanded={open ? 'true' : undefined}
         onClick={handleClick}
-        color='lightblack'
-        sx={{ border:"GrayText" }}
+        color="lightblack"
+        sx={{ border: "GrayText" }}
       >
         Sign As
       </Button>
@@ -38,15 +49,14 @@ export default function FadeMenu() {
         open={open}
         onClose={handleClose}
         TransitionComponent={Fade}
-        
       >
-        <MenuItem  onClick={handleClose}>
-           <AccountCircleIcon style={{marginRight:"5px"}}/>
-            Login As Customer
+        <MenuItem onClick={handleCustomerLogin}>
+          <AccountCircleIcon style={{ marginRight: "5px" }} />
+          Login As Customer
         </MenuItem>
-        <MenuItem onClick={handleClose}>
-           <StorefrontIcon style={{marginRight:"5px"}}/>
-           Login As Seller
+        <MenuItem onClick={handleSellerLogin}>
+          <StorefrontIcon style={{ marginRight: "5px" }} />
+          Login As Seller
         </MenuItem>
       </Menu>
     </div>
