@@ -46,7 +46,6 @@ const userSlice = createSlice({
             localStorage.setItem("user",JSON.stringify(action.payload));
             state.status = "success";
             state.response=null;
-
         },
 }
 });
@@ -56,7 +55,10 @@ export const {
     authError,
     authFailed,
     authLogout,
+    authSuccess,
+    authInitial
     
             
 
-}=userSlice.reducer;
+}=userSlice.actions;
+export const userReducer = userSlice.reducer;

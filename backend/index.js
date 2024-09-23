@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 const cors = require('cors');
 const app = express();
 const dotenv= require("dotenv");
+const Routes = require('./routes/routes');
 dotenv.config();
 
 app.use(express.json({ limit: "10mb" })); // to get data from the frontend
@@ -17,6 +18,8 @@ mongoose.connect(process.env.MONGODB_URL, {
   }).catch(() => {
     console.log("Not connected to the Mongodb");
   });
+
+app.use('/', Routes);
 
 
 const PORT = process.env.PORT || 5000;

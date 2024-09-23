@@ -1,5 +1,5 @@
 import { Box, Container, Typography } from '@mui/material'
-import React, { useState } from 'react'
+import React, { useState ,useEffect} from 'react'
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import TextField from '@mui/material/TextField';
 import Grid2 from '@mui/material/Grid2';
@@ -17,23 +17,65 @@ import Checkbox from '@mui/material/Checkbox';
 import Button from '@mui/material/Button';
 import { CircularProgress } from '@mui/material';
 import Link from '@mui/material/Link';
+import { useDispatch, useSelector } from 'react-redux';
+import { LoginUser } from '../../Redux/UserHandle';
+import { authInitial } from '../../Redux/UserSlice';
+import { useNavigate } from 'react-router-dom';
+
 
 const defaultTheme = createTheme();
 
 
 const LoginAs = ({role}) => {
+  const {status,response,error,loading} = useSelector((state) => state.user);
   const [checkField, setCheckField] = useState("");
   const [message, setMessage] = useState(false);
   const [toggle, setToggle] = useState(false);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  console.log(role);
   const updatedrole = role.charAt(0).toLowerCase() + role.slice(1);
 
-  
-  const handleSubmit =(e) => {
-    e.preventDefault();
-   
-  } 
-  return (
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    const data = new FormData(event.currentTarget);
+    console.log({
+      email: data.get('email'),
+      password: data.get('password'),
+    });
 
+    const email = data.get('email');
+    const password = data.get('password');
+    const fields = { password, email,role };
+    dispatch(LoginUser(fields));
+  };
+
+  useEffect(() => {
+    console.log(status);
+    if(status === "success"){
+      dispatch(authInitial());
+      navigate(`/`);
+    }else if(status === "failed"){
+      setMessage(true);
+      setCheckField(response);
+      setTimeout(()=> {
+        setMessage(false);
+        setCheckField("");
+        dispatch(authInitial())
+      },5000)
+    }else if(status === "error"){
+      setMessage(true);
+      setCheckField(error+"Network problem!");
+      setTimeout(() => {
+        setMessage(false);
+        setCheckField(""); // also done by without need of checkfield
+        dispatch(authInitial());
+      },5000)
+    }
+  },[status])
+
+
+  return (
     <ThemeProvider theme={defaultTheme}>
      <Container component="main" maxWidth="xs">
      <CssBaseline />
@@ -81,7 +123,7 @@ const LoginAs = ({role}) => {
                 ),
             }}
             />
-             {/* {message && <p className='errorlogin courseDetail' style={{color:"red",marginTop:"5px"}}>{checkField}</p>} */}
+             {message && <p className='errorlogin courseDetail' style={{color:"red",marginTop:"5px"}}>{checkField}</p>}
             <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}
               label="Remember me"
@@ -92,23 +134,21 @@ const LoginAs = ({role}) => {
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
             >
-              <CircularProgress size={24} color="inherit" />: "Log In"
+              {loading ?<CircularProgress size={24} color="inherit" />: "Log In"}
             </Button>
             <Grid2 container>
-              <Grid2 item xs>
+              <Grid2  xs>
                 <Link href="#" variant="body2">
                   Forgot password?  
                 </Link>
               </Grid2>
-              <Grid2 item sx={{marginLeft:"75px"}}>
+              <Grid2 sx={{marginLeft:"75px"}}>
                 <Link href={`/register${updatedrole}`} variant="body2">
                   {"Don't have an account? Sign Up"}
                 </Link>
               </Grid2>
             </Grid2>
-         </Box>
-     
-            
+         </Box>   
         </Box>
       </Container>
       </ThemeProvider>
