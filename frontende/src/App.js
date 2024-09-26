@@ -11,17 +11,21 @@ import LoginAs from "./pages/form/LoginAs";
 import Signup from "./pages/form/Signup";
 import { useSelector } from "react-redux";
 import DashBoard from "./components/Seller/DashBoard";
+import Profile from "./utils/navbar/profile";
+import MyOrders from "./utils/navbar/MrOrders";
+import Logout from "./utils/navbar/Logout";
+
 
 function App() {
   const { currentUser } = useSelector((state) => state.user);
   return (
     <Router>
        {/* for seller */}
-       {/* {currentUser?.role === "Seller" && (
+       {currentUser?.role === "Seller" && (
         <>
           <DashBoard/>
         </>
-      )} */}
+      )}
      {/* for customer  */}
      {/* {currentUser?.role === "Customer" && (  
       <>
@@ -36,6 +40,8 @@ function App() {
       </>
       )}   */}
       {/* {!currentUser?.email && (<> */}
+      {/* {currentUser?.role === "Customer" && (  */}
+        {/* <>
         <NavBar/>
       <Routes>
       <Route path="/" element={<FirstPage/>}/>
@@ -43,7 +49,16 @@ function App() {
       <Route path="/loginseller" element={<LoginAs role={"Seller"}/>}/>
       <Route path="/registercustomer" element={<Signup role={"Customer"}/>}/>
       <Route path="/registerseller" element={<Signup role={"Seller"}/>}/>
+      <Route path="/profile" element={<Profile/>}/>
+      <Route path="/Myorders" element={<MyOrders/>}/>
+      <Route path="/logout" element={<Logout/>}/>
+      <Route path="*" element={<Navigate to="/" />} />
       </Routes>
+      </> */}
+      {/* )} */}
+      
+
+
       {/* </>
         )} */}
     </Router>

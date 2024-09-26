@@ -52,6 +52,17 @@ export const RegisterUser = (fields) => async(dispatch) => {
     }
   }
 
+   
+
+  export const LogoutUser =() =>(dispatch) =>{
+    try{
+      dispatch(authLogout());
+    }catch(error){
+      console.log(error);
+
+    }
+  }
+
 //   //register seller
 
 //   export const RegisterSeller = (fields) => async(dispatch) => {
