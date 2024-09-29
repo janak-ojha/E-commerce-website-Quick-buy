@@ -14,20 +14,21 @@ import DashBoard from "./components/Seller/DashBoard";
 import Profile from "./utils/navbar/profile";
 import MyOrders from "./utils/navbar/MrOrders";
 import Logout from "./utils/navbar/Logout";
+import MiniDrawer from "./components/Seller/DashBoard";
 
 
 function App() {
   const { currentUser } = useSelector((state) => state.user);
   return (
     <Router>
-       {/* for seller */}
-       {currentUser?.role === "Seller" && (
+        {/* for seller */}
+      {currentUser?.role === "Seller" && (
         <>
-          <DashBoard/>
+          <MiniDrawer />
         </>
       )}
      {/* for customer  */}
-     {/* {currentUser?.role === "Customer" && (  
+     {!currentUser?.email && (
       <>
     <NavBar/>
       <Routes>
@@ -38,10 +39,10 @@ function App() {
       <Route path="/registerseller" element={<Signup role={"Seller"}/>}/>
       </Routes>
       </>
-      )}   */}
-      {/* {!currentUser?.email && (<> */}
-      {/* {currentUser?.role === "Customer" && (  */}
-        {/* <>
+      )}  
+
+      {currentUser?.role === "Customer" && ( 
+        <>
         <NavBar/>
       <Routes>
       <Route path="/" element={<FirstPage/>}/>
@@ -54,13 +55,12 @@ function App() {
       <Route path="/logout" element={<Logout/>}/>
       <Route path="*" element={<Navigate to="/" />} />
       </Routes>
-      </> */}
-      {/* )} */}
+      </>
+       )} 
       
 
 
-      {/* </>
-        )} */}
+    
     </Router>
 
   );

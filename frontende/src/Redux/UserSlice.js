@@ -47,7 +47,16 @@ const userSlice = createSlice({
             state.status = "success";
             state.response=null;
         },
-}
+        stuffAdded: (state) => {
+            state.status = 'added';
+            state.response = null;
+            state.error = null;
+        },
+        underControl: (state) => {
+            state.status = 'idle';
+            state.response = null;
+        },
+}       
 });
 
 export const {
@@ -56,7 +65,9 @@ export const {
     authFailed,
     authLogout,
     authSuccess,
-    authInitial
+    authInitial,
+    stuffAdded,
+    underControl,
     
             
 
