@@ -145,7 +145,7 @@ const ResponsiveAppBar = () => {
               <Tooltip title="Cart">
                 {/* shoping cart icon */}
                 <IconButton onClick={handleOpenCart} sx={{ width: "4rem", color: "inherit", p: 0 }}>
-                  <ShoppingCartIcon />
+                  <ShoppingCartIcon/>
                 </IconButton>
                 {/* account details */}
               </Tooltip>

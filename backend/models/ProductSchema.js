@@ -3,37 +3,30 @@ const mongoose = require("mongoose");
 const productSchema = new mongoose.Schema(
     {
         productName:{
-            type:String
-        },
-        price:{
-            mrp:{
-                type:Number
-            },
-            cost:{
-                type:Number
-            },
-            discountPercent:{
-                type:Number
-            }
-        },
-        subcategory:{
             type:String,
+            required:true,
+        },
+        cost:{
+            type:Number,
+            required:true,
+        },
+        quantity:{
+            type:Number,
+            required:true
         },
         productImage:{
             type:String,
+
+        },
+        discountPercent:{
+           type:Number,
+           required:true,
         },
         category:{
-            type:String
+            type:String,
         },
         description: {
-            type: String
-        },
-        tagline: {
-            type: String
-        },
-        quantity: {
-            type: Number,
-            default: 1
+            type: String,
         },
         seller: {
             type: mongoose.Schema.Types.ObjectId,
@@ -43,4 +36,4 @@ const productSchema = new mongoose.Schema(
     }
     , { timestamps: true });
 
-module.exports = mongoose.model("Product",productSchema);    
+module.exports =  new mongoose.model("Product",productSchema);    

@@ -1,55 +1,64 @@
 import { useEffect, useState } from 'react';
 import { Box, CircularProgress, Stack, TextField, Button } from '@mui/material';
 import Popup from '../../../utils/Popop';
-import { BlueButton } from '../../../utils/ButtonStyles';
-import altImage from '../../../assets/altimg.png';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector, } from 'react-redux';
 import { addStuff } from '../../../Redux/UserHandle';
 import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
 import styled from 'styled-components';
 import ImageIcon from '@mui/icons-material/Image';
+import {BlueButton} from '../../../utils/ButtonStyles';
+import { useNavigate } from 'react-router-dom';
 
 const AddProduct = () => {
+  const navigate=useNavigate()
   const dispatch = useDispatch();
   const { currentUser, status, response, error } = useSelector(state => state.user);
-
   const [productName, setProductName] = useState("");
-  const [mrp, setMrp] = useState("");
   const [cost, setCost] = useState("");
   const [discountPercent, setDiscountPercent] = useState("");
-  const [subcategory, setSubcategory] = useState("");
+  const [quantity, setQuantity] = useState("");
   const [productImage, setProductImage] = useState("");
-  const [localImage, setLocalImage] = useState(''); // New state for local uploaded image
+  const [localImage, setLocalImage] = useState(''); 
   const [category, setCategory] = useState("");
   const [description, setDescription] = useState("");
-  const [tagline, setTagline] = useState("");
   const seller = currentUser._id;
-
   const [loader, setLoader] = useState(false);
   const [message, setMessage] = useState("");
   const [showPopup, setShowPopup] = useState(false);
+    
+
+const submitHandler = (event) => {
+  event.preventDefault();
+  setLoader(true); // Assuming you have a loader state
 
   const fields = {
-    productName,
-    price: {
-      mrp: mrp,
-      cost: cost,
-      discountPercent: discountPercent,
-    },
-    subcategory,
-    productImage: localImage || productImage, // Prefer local image if uploaded
-    category,
-    description,
-    tagline,
-    seller
+      productName,
+      cost,
+      discountPercent,
+      quantity,
+      productImage: localImage || productImage,
+      category,
+      description,
+      seller,
   };
 
-  const submitHandler = (event) => {
-    console.log(fields);
-    event.preventDefault();
-    setLoader(true);
-    dispatch(addStuff("productAdd", fields));
-  };
+  // Call the addStuff action
+  dispatch(addStuff('productAdd', fields)).then(() => {
+      // Clear the form fields
+      setProductName("");
+      setCost("");
+      setDiscountPercent("");
+      setQuantity("");
+      setProductImage("");
+      setLocalImage("");
+      setCategory("");
+      setDescription("");
+      setLoader(false); // Stop the loader
+      navigate('/addproduct'); // Navigate to the same page
+  });
+};
+
+
 
   const handleImageUpload = (event) => {
     const file = event.target.files[0];
@@ -167,16 +176,6 @@ const AddProduct = () => {
                 />
                 <TextField
                   fullWidth
-                  label="MRP"
-                  value={mrp}
-                  onChange={(event) => setMrp(event.target.value)}
-                  required
-                  InputLabelProps={{
-                    shrink: true,
-                  }}
-                />
-                <TextField
-                  fullWidth
                   label="Cost"
                   value={cost}
                   onChange={(event) => setCost(event.target.value)}
@@ -207,24 +206,15 @@ const AddProduct = () => {
                 />
                 <TextField
                   fullWidth
-                  label="Subcategory"
-                  value={subcategory}
-                  onChange={(event) => setSubcategory(event.target.value)}
+                  label="quantity"
+                  value={quantity}
+                  onChange={(event) => setQuantity(event.target.value)}
                   required
                   InputLabelProps={{
                     shrink: true,
                   }}
                 />
-                <TextField
-                  fullWidth
-                  label="Tagline"
-                  value={tagline}
-                  onChange={(event) => setTagline(event.target.value)}
-                  required
-                  InputLabelProps={{
-                    shrink: true,
-                  }}
-                />
+              
               </Stack>
               <BlueButton
                 fullWidth

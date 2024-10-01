@@ -71,13 +71,18 @@ export const RegisterUser = (fields) => async(dispatch) => {
         const result = await axios.post(`http://localhost:5000/${address}`, fields, {
             headers: { 'Content-Type': 'application/json' },
         });
-         console.log(result);
+        // Check for a message in the response to determine success or failure
         if (result.data.message) {
-            dispatch(authFailed(result.data.message));
+            dispatch(authFailed(result.data.message)); // Dispatch failure if message is present
         } else {
-            dispatch(stuffAdded());
+            dispatch(stuffAdded()); // Dispatch success action if no message indicates failure
         }
     } catch (error) {
-        dispatch(authError(error));
+        // Extract only serializable information from Axios error
+        const errorMessage = error.response?.data?.message || error.message || "Something went wrong";
+        const errorStatus = error.response?.status || "Unknown status";
+        
+        // Dispatch an error action with the extracted error information
+        dispatch(authError({ message: errorMessage, status: errorStatus }));
     }
 };

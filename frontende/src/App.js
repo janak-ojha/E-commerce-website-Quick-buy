@@ -15,6 +15,7 @@ import Profile from "./utils/navbar/profile";
 import MyOrders from "./utils/navbar/MrOrders";
 import Logout from "./utils/navbar/Logout";
 import MiniDrawer from "./components/Seller/DashBoard";
+import CartHome from "./utils/Cart/CartHome";
 
 
 function App() {
@@ -53,6 +54,7 @@ function App() {
       <Route path="/profile" element={<Profile/>}/>
       <Route path="/Myorders" element={<MyOrders/>}/>
       <Route path="/logout" element={<Logout/>}/>
+      <Route path="/opencart" element={<CartHome/>}/>
       <Route path="*" element={<Navigate to="/" />} />
       </Routes>
       </>

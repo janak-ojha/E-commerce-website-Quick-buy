@@ -1,27 +1,29 @@
 const router = require('express').Router();
 
-const{
-    registerCustomer,loginCustomer,
-}=require('../controllers/CustomerController');
+const {
+    registerCustomer, loginCustomer,
+} = require('../controllers/CustomerController');
 
-const{
-    registerSeller,loginSeller,
-}=require("../controllers/SellerController");
+const {
+    registerSeller, loginSeller,
+} = require("../controllers/SellerController");
 
-const{
-    ProductAdd
-}=require("../controllers/ProductController");
+const {
+    productAdd,
+} = require("../controllers/ProductController");
+
 
 //customer
-router.post('/registerCustomer',registerCustomer);
-router.post('/loginCustomer',loginCustomer);
+router.post('/registerCustomer', registerCustomer);
+router.post('/loginCustomer', loginCustomer);
 
 //seller
-router.post('/registerSeller',registerSeller);
-router.post('/loginSeller',loginSeller);
+router.post('/registerSeller', registerSeller);
+router.post('/loginSeller', loginSeller);
 
 //product
-router.post("/productAdd",ProductAdd);
+router.post('/productAdd', productAdd);
 
 
-module.exports=router;
+
+module.exports = router;
