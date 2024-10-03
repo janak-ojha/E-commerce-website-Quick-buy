@@ -5,6 +5,10 @@ const initialState = {
      loading: false,
      response: null,
      error: null,
+     productData: [],
+     particularProductData: null,
+     responseProducts: null,
+     listOfProductOfSingleSeller:[],
      currentUser: JSON.parse(localStorage.getItem("user")) || null,
 };
 
@@ -56,6 +60,38 @@ const userSlice = createSlice({
             state.status = 'idle';
             state.response = null;
         },
+        authGetProductData: (state, action) => {
+            state.loading = false;
+            state.status = "success";
+            state.productData = action.payload;
+          },
+        authGetSearchedProduct: (state, action) => {
+            state.loading = false;
+            state.status = "success";
+            state.productData = action.payload;
+          },  
+        authGetParticularProductDetails: (state, action) => {
+            state.loading = false;
+            state.status = "success";
+            state.particularProductData = action.payload;
+        },
+        authSuccessToSaveCategories: (state, action) => {
+            state.loading = false;
+            state.status = "success";
+            state.categoriesList = action.payload;
+          },
+        authGettedProductOfSingleSeller: (state, action) => {
+            state.listOfProductOfSingleSeller = action?.payload;
+            state.status = "idle";
+            state.loading = false;
+          },  
+        getProductsFailed: (state, action) => {
+            state.responseProducts = action.payload;
+            state.loading = false;
+            state.error = null;
+        },  
+
+
 }       
 });
 
@@ -68,6 +104,13 @@ export const {
     authInitial,
     stuffAdded,
     underControl,
+    authGetProductData,
+    authGetSearchedProduct,
+    authGetParticularProductDetails,
+    authSuccessToSaveCategories,
+    authGettedProductOfSingleSeller,
+    getProductsFailed,
+    
     
             
 

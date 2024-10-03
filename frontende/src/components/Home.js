@@ -5,8 +5,12 @@ import HomeCorosel from "../utils/home/HomeCorosel";
 import Categories from "../utils/navbar/Categories";
 import HomeCard from "../utils/home/HomeCard";
 import { Typography } from '@mui/material';
+import { useSelector } from 'react-redux';
+import particularProductDetails from "../Redux/UserHandle";
+
 
 const Home = () => {
+ 
   return (
     <>
     <Box sx={{ display: { xs: 'flex', md: 'none' }, alignItems: 'center', borderRadius:"20px", flexGrow: 1, marginTop:1 }} >

@@ -64,6 +64,8 @@ const loginSeller =async(req,res) =>{
     }
 }
 
+
+
 module.exports={
     registerSeller,
     loginSeller,
