@@ -1,8 +1,11 @@
 import React from 'react'
+import MyOrders from "../../../utils/navbar/MrOrders";
 
 const Orders = () => {
   return (
-    <div>Orders</div>
+    <div>
+      <MyOrders/>
+    </div>
   )
 }
 

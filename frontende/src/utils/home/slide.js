@@ -65,7 +65,7 @@ import {
           >
             {products?.length > 0 &&
               products?.map((product, index) => {
-                const image = product?.image || ""; // Handle undefined product or product.image
+                const image = product?.productImage || ""; // Handle undefined product or product.image
                 const encodedImage = encodeURIComponent(image);
                 const productId = product?._id;
   
@@ -76,9 +76,9 @@ import {
                     style={{ textDecoration: "none" }}
                   >
                     <Box textAlign="center" style={{ padding: "25px 15px" }}>
-                      <Image src={product?.image} />
+                      <Image src={product?.productImage} />
                       <TitleText style={{ fontWeight: 600, color: "#212121" }}>
-                        {product?.name}
+                        {product?.productName}
                       </TitleText>
                       <TextContainer>
                         <Text
@@ -93,11 +93,11 @@ import {
                           ₹
                           {(
                             product?.cost -
-                            product?.cost * (product?.discount / 100)
+                            product?.cost * (product?.discountPercent / 100)
                           ).toFixed(2)}
                         </Text>
                         <Text style={{ color: "green" }}>
-                          {product?.discount}
+                          {product?.discountPercent}%
                         </Text>
                       </TextContainer>
                       <Text style={{ color: "#212121", opacity: ".6" }}>

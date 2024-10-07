@@ -223,9 +223,12 @@ export const getProductOfSeller =(id) =>async(dispatch) =>{
   console.log(id);
   dispatch(authRequest());
   try {
-    let result = await fetch(`http://localhost:5000//getproduct/${id}`,
+    let result = await fetch(`http://localhost:5000/getproducts/${id}`,
       {
-        method:"get"
+        method:"get",
+        headers: {
+          "Content-Type": "application/json",
+        }
       }
     );
     result = await result.json();
@@ -238,3 +241,4 @@ export const getProductOfSeller =(id) =>async(dispatch) =>{
     dispatch(authError("network Error "));
   }
 }
+

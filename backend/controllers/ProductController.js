@@ -1,4 +1,5 @@
 const Product = require("../models/ProductSchema");
+const Cart = require("../models/Cart");
 
 const productAdd = async (req, res) => {
     try {
@@ -35,9 +36,9 @@ const getPerticularProduct = async(req,res)=>{
         console.log(result);
         res.send({
             _id: result._id,
-            name: result.productName,
+            productName: result.productName,
             cost: result.cost,
-            discount: result.discountPercent,
+            discountPercent: result.discountPercent,
             category: result.category,
             quantity:result.quantity,
             description:result.description,
@@ -88,6 +89,27 @@ const getSearchesProduct = async(req,res) =>{
         console.log(error);
         res.status(500).json(error);
         
+    }
+}
+
+// save to cart
+const saveToCart=async(req,res) =>{
+    const{customer,product,quantity} = req.body.fields;
+    try {
+        let result = new Cart(
+            {
+                customer,
+                product,
+                quantity,
+            }
+        );
+        result=await result.save();
+        if(result?.customer){
+            res.status(200).send({message:"Successfully added to the cart."})
+        }
+    } catch (error) {
+        console.log(error);
+        res.status(500).json(error);
     }
 }
 

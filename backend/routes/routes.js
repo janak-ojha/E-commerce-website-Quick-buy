@@ -12,9 +12,7 @@ const {
     productAdd,getPerticularProduct,getProduct,getSearchesProduct,getSearchedProduct
 } = require("../controllers/ProductController");
 
-const {
-    getProductSeller,
-}=require("../controllers/ProductOfSingleSeller")
+const getProductOfSeller =require("../controllers/ProductOfSingleSeller");
 
 
 //customer
@@ -32,7 +30,7 @@ router.get('/getProduct',getProduct),
 router.get('/getSearchesProduct',getSearchesProduct),
 router.get('/getSearchedProduct',getSearchedProduct)
 
-router.get('/getproduct/:id',getProductSeller);
+router.get('/getproducts/:id',getProductOfSeller);
 
 
 

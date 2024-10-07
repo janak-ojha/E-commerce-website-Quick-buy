@@ -16,6 +16,7 @@ import MyOrders from "./utils/navbar/MrOrders";
 import Logout from "./utils/navbar/Logout";
 import MiniDrawer from "./components/Seller/DashBoard";
 import CartHome from "./utils/Cart/CartHome";
+import PerticularProduct from "./pages/Products/PerticularProduct";
 
 
 function App() {
@@ -55,6 +56,10 @@ function App() {
       <Route path="/Myorders" element={<MyOrders/>}/>
       <Route path="/logout" element={<Logout/>}/>
       <Route path="/opencart" element={<CartHome/>}/>
+      <Route
+            path="/particularproduct/:encodedImage/:productId"
+            element={<PerticularProduct/>}
+          />
       <Route path="*" element={<Navigate to="/" />} />
       </Routes>
       </>
