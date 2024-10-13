@@ -11,7 +11,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect,useState } from "react";
 import AddProduct from "../../components/Seller/component/AddProduct";
-import { particularProductDetails } from "../../Redux/UserHandle";
+import { particularProductDetails,saveToCart,settingAllToInitial,getCartProductLengthHandle } from "../../Redux/UserHandle";
 
 const StyledDiv = styled.div`
   display: flex;
@@ -66,7 +66,7 @@ export const ScrollableParagraph = styled.div`
 `;
 
 const PerticularProduct = () => {
-   const{response,currentUser,particularProductData} = useSelector((state) => state.user);
+   const{response,currentUser,particularProductData,cartProductLength} = useSelector((state) => state.user);
    console.log(currentUser);
 
    const [selectedValue, SetSelectedValue] = useState("");
@@ -76,6 +76,8 @@ const PerticularProduct = () => {
   const Id = currentUser?._id;
   const encodedImage = useParams().encodedImage;
   const productId = useParams().productId;
+  console.log(productId);
+  console.log(Id)
   const decodedImage = decodeURIComponent(encodedImage);
   useEffect(() => {
     dispatch(particularProductDetails(productId));
@@ -92,13 +94,27 @@ const PerticularProduct = () => {
         navigate('/buyingorcartingwithoutlogin');
     }
     else{
-        const customer = currentUser._id;
-        const product = particularProductData._id;
+        const customer = currentUser?._id;
+        const product = particularProductData?._id;
         const quantity = 1;
-        const field = {customer,product,quantity};
-        dispatch()
+        const fields = {customer,product,quantity};
+        dispatch(saveToCart(fields));
+        const updatednum = cartProductLength + 1;
+        dispatch(getCartProductLengthHandle(updatednum));
     }
   }
+  
+
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      if (response !== null) {
+        dispatch(settingAllToInitial());
+      }
+    }, 1500);
+
+    return () => clearTimeout(timeout);
+  }, [response]);
+
   
   const handleBuyFromParticularProduct =() =>{
 

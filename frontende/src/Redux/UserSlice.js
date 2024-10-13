@@ -7,6 +7,7 @@ const initialState = {
      error: null,
      productData: [],
      particularProductData: null,
+     cartProductLength:null,
      responseProducts: null,
      listOfProductOfSingleSeller:[],
      currentUser: JSON.parse(localStorage.getItem("user")) || null,
@@ -51,6 +52,12 @@ const userSlice = createSlice({
             state.status = "success";
             state.response=null;
         },
+        //for cart
+        authSuccessC:(state,action) =>{
+            state.loading = false;
+            state.status = "success";
+            state.response = action.payload;
+        },
         stuffAdded: (state) => {
             state.status = 'added';
             state.response = null;
@@ -85,6 +92,9 @@ const userSlice = createSlice({
             state.status = "idle";
             state.loading = false;
           },  
+          authCartProductLengthHandler: (state, action) => {
+            state.cartProductLength = action?.payload;
+          },  
         getProductsFailed: (state, action) => {
             state.responseProducts = action.payload;
             state.loading = false;
@@ -101,6 +111,7 @@ export const {
     authFailed,
     authLogout,
     authSuccess,
+    authSuccessC,
     authInitial,
     stuffAdded,
     underControl,
@@ -109,10 +120,7 @@ export const {
     authGetParticularProductDetails,
     authSuccessToSaveCategories,
     authGettedProductOfSingleSeller,
+    authCartProductLengthHandler,
     getProductsFailed,
-    
-    
-            
-
 }=userSlice.actions;
 export const userReducer = userSlice.reducer;

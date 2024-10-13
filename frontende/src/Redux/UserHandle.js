@@ -1,6 +1,8 @@
 import { json } from "react-router-dom";
 import { authRequest,
          authSuccess, 
+         authSuccessC,
+         authInitial,
          authFailed, 
          authError, 
          authLogout,
@@ -10,8 +12,13 @@ import { authRequest,
          authGetSearchedProduct,
          authSuccessToSaveCategories,
          authGettedProductOfSingleSeller,
+         authCartProductLengthHandler,
 } from "./UserSlice";
 import axios from 'axios';
+
+export const settingAllToInitial = () => async (dispatch) => {
+  dispatch(authInitial());
+};
 
 //user login
 export const LoginUser = (fields) => async(dispatch) =>{
@@ -100,36 +107,66 @@ export const RegisterUser = (fields) => async(dispatch) => {
 };
 
 // perticular product detail
-export const particularProductDetails = (productId) => async(dispatch) =>{
+// Action to fetch particular product details by ID
+export const particularProductDetails = (productId) => async (dispatch) => {
   dispatch(authRequest());
+
   try {
+    // Use the productId in the URL to match the backend route
     let result = await fetch(
-      `http://localhost:5000/getPerticularProduct`,{
-        method:"post",
-        body:JSON.stringify({productId}),
-        headers:{
+      `http://localhost:5000/getPerticularProduct/${productId}`, // Here, productId replaces :id in the URL
+      {
+        method: "get", // GET method to retrieve data
+        headers: {
           "Content-Type": "application/json",
-        }
+        },
       }
     );
+
     result = await result.json();
-    console.log(result);
-    if(result)
-    {
-      dispatch(authGetParticularProductDetails(result));
-    }else{
-      dispatch(authFailed(result?.message));
+
+    // Check if the result contains a message (for error handling)
+    if (result && !result.message) {
+      dispatch(authGetParticularProductDetails(result)); // Dispatch success action
+    } else {
+      dispatch(authFailed(result?.message || "Product not found")); // Dispatch failure action
     }
   } catch (error) {
-    console.log(error);
-    dispatch(
-      authError(
-        "an error occured while getting product detail"
-      )
-    )
-    
+    console.log("Error fetching product:", error);
+    dispatch(authError("An error occurred while getting product details")); // Dispatch error action
   }
-}
+};
+
+// export const particularProductDetails = (productId) => async(dispatch) =>{
+//   dispatch(authRequest());
+//   try {
+//     let result = await fetch(
+//       `http://localhost:5000/getPerticularProduct/${productId}`,{
+//         method:"post",
+//         body:JSON.stringify({productId}),
+//         headers:{
+//           "Content-Type": "application/json",
+//         }
+//       }
+//     );
+//     result = await result.json();
+//     console.log(result);
+//     if(result)
+//     {
+//       dispatch(authGetParticularProductDetails(result));
+//     }else{
+//       dispatch(authFailed(result?.message));
+//     }
+//   } catch (error) {
+//     console.log(error);
+//     dispatch(
+//       authError(
+//         "an error occured while getting product detail"
+//       )
+//     )
+    
+//   }
+// }
 
 // to get all the prooducts
 export const getProducts = () => async(dispatch) =>{
@@ -241,4 +278,41 @@ export const getProductOfSeller =(id) =>async(dispatch) =>{
     dispatch(authError("network Error "));
   }
 }
+
+//save to cart
+export const saveToCart = (fields) => async(dispatch) =>{
+  try {
+    let result=await fetch(`http://localhost:5000/saveToCart`,{
+      method:"post",
+      body: JSON.stringify({fields}),
+      headers:{
+        "Content-Type":"application/json",
+      },
+    });
+    result = await result.json();
+    
+    if(result?.message === "Successfully added to the cart."){
+      dispatch(authSuccessC(result.message));
+    }else{
+      authFailed("fsiled try again after some time");
+    }
+  } catch (error) {
+    console.log("network Error",error);
+    dispatch(authError("network Error"))
+  }
+}
+
+//get product cart lenght
+export const getCartProductLengthHandle = 
+   (updatedLength) => async(dispatch) =>{
+    console.log(updatedLength);
+   
+   try {
+    console.log(updatedLength);
+    dispatch(authCartProductLengthHandler(updatedLength))
+   } catch (error) {
+    console.error("Network Error:", error);
+    dispatch(authError("Network Error."));
+   }
+  }
 

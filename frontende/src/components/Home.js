@@ -17,12 +17,13 @@ const Home = () => {
 
   const [showNetworkError, setShowNetworkError] = useState(false);
   const dispatch = useDispatch();
+  console.log(currentUser);
   const Id = currentUser?._id;
+  console.log("currentUser:", currentUser);
+  console.log("Id:", Id);
   const adURL = "https://rukminim1.flixcart.com/flap/464/708/image/1f03e99f6dc9f7a6.jpg?q=70";
 
   useEffect(() => {
-    console.log("currentUser:", currentUser);
-    console.log("Id:", Id);
     dispatch(getProducts());
     if (Id !== undefined) {
       if (currentUser?.role === "Seller") {
@@ -30,8 +31,7 @@ const Home = () => {
       }
     }
   }, []); 
-  console.log(listOfProductOfSingleSeller);
-  console.log(productData);
+
 
   useEffect(() => {
     if (error) {

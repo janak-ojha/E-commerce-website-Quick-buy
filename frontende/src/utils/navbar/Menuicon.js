@@ -12,6 +12,7 @@ import { useSelector } from 'react-redux';
 
 export default function FadeMenu() {
 const {currentUser} = useSelector((state) =>state.user);  
+console.log(currentUser);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const navigate = useNavigate();
   const open = Boolean(anchorEl);

@@ -9,7 +9,7 @@ const {
 } = require("../controllers/SellerController");
 
 const {
-    productAdd,getPerticularProduct,getProduct,getSearchesProduct,getSearchedProduct
+    productAdd,getPerticularProduct,getProduct,getSearchesProduct,getSearchedProduct,saveToCart,
 } = require("../controllers/ProductController");
 
 const getProductOfSeller =require("../controllers/ProductOfSingleSeller");
@@ -25,10 +25,11 @@ router.post('/loginSeller', loginSeller);
 
 //product
 router.post('/productAdd', productAdd);
-router.get('/getPerticularProduct',getPerticularProduct),
+router.get('/getPerticularProduct/:id',getPerticularProduct),
 router.get('/getProduct',getProduct),
 router.get('/getSearchesProduct',getSearchesProduct),
-router.get('/getSearchedProduct',getSearchedProduct)
+router.get('/getSearchedProduct',getSearchedProduct),
+router.post('/saveToCart',saveToCart),
 
 router.get('/getproducts/:id',getProductOfSeller);
 

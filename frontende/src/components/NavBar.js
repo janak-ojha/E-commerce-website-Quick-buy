@@ -15,6 +15,7 @@ const ResponsiveAppBar = () => {
   const { currentUser } = useSelector((state) => state.user);
   const [searchOpen, setSearchOpen] = useState(false); // State for toggling search input
   const [isCartOpen, setIsCartOpen] = useState(false);
+  console.log(currentUser);
 
   const navigate = useNavigate();
 

@@ -27,29 +27,58 @@ const getProduct =async(req,res) =>{
 }
 
 
-//for perticular product
-const getPerticularProduct = async(req,res)=>{
+
+
+const mongoose = require('mongoose');
+
+const getPerticularProduct = async (req, res) => {
     try {
-        const productId = req.body._id; // Accessing the _id from the request body
-        console.log(productId);
-        let result = await Product.findById(productId);
-        console.log(result);
-        res.send({
+        // Assuming you pass the ID as a URL parameter (e.g., /product/:id)
+        const productId = req.params.id; 
+
+        // Validate if the product ID is a valid MongoDB ObjectId
+        if (!mongoose.Types.ObjectId.isValid(productId)) {
+            return res.status(400).send({ message: "Invalid product ID format" });
+        }
+
+        // Log the product ID for debugging
+        console.log("Fetching product with ID:", productId);
+
+        // Fetch the product from MongoDB using findById
+        const result = await Product.findById(productId);
+
+        // If the product is not found, return 404
+        if (!result) {
+            return res.status(404).send({ message: "Product not found" });
+        }
+
+        // Return the product details if found
+        res.status(200).send({
             _id: result._id,
-            productName: result.productName,
+            name: result.productName,
             cost: result.cost,
-            discountPercent: result.discountPercent,
+            discount: result.discountPercent,
             category: result.category,
-            quantity:result.quantity,
-            description:result.description,
+            quantity: result.quantity,
+            description: result.description,
             seller: result.seller,
-        })
+        });
+
     } catch (error) {
-        console.log(error);
-        res.status(500).send(error);
-        
+        // Log the error details for debugging
+        console.error("Error fetching product:", error);
+
+        // Return 500 in case of server error
+        res.status(500).send({ message: "Server error", error });
     }
-}
+};
+
+
+
+
+
+
+
 
 //for searching according to category
 const getSearchedProduct =async(req,res)=>{
@@ -120,5 +149,6 @@ module.exports = {
     getSearchedProduct,
     getSearchesProduct,
     getPerticularProduct,
+    saveToCart,
 
 };
