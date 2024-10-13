@@ -4,6 +4,7 @@ import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
 import { Alert, Button, CardActionArea, TextField } from "@mui/material";
+import Box from "@mui/material/Box";
 import styled from "styled-components";
 import BoltIcon from "@mui/icons-material/Bolt";
 import StarRateIcon from "@mui/icons-material/StarRate";
@@ -64,6 +65,15 @@ export const ScrollableParagraph = styled.div`
   overflow-y: scroll;
   padding: 10px;
 `;
+
+export const CenteredText = styled.span`
+  text-decoration: line-through;
+  margin-left: 10px;
+  margin-right: 10px;
+  font-size: 20px !important;
+`;
+
+
 
 const PerticularProduct = () => {
    const{response,currentUser,particularProductData,cartProductLength} = useSelector((state) => state.user);
@@ -183,6 +193,80 @@ const PerticularProduct = () => {
             </CardContent>
           )}
             </Card>
+        </div>
+
+        {/* {{2nd card}} */}
+        <div>
+          <ScrollableParagraph>
+            <h3>{particularProductData?.name}</h3>
+            <div
+             style={{
+              display: "flex",
+              flexDirection: "row",
+              alignContent: "center",
+            }}
+            >
+              <Button variant="contained">
+                4.5
+                <StarRateIcon
+                 style={{
+                  fontSize: "12px",
+                  marginBottom: "2px",
+                }}
+                /> 
+              </Button>
+              <span>
+                <p style={{ marginLeft: "10px" }}>
+                  43,836 Ratings & 5,047 Reviews
+                </p>
+              </span>
+            </div>
+
+            {/* {for price} */}
+            <div>
+              <h2 style={{ color: "green" }} > Special Price</h2>
+              <p>
+                {" "}
+                <span style={{ fontSize: "32px", fontWeight: "bolder" }}>
+                ₹
+                  {(particularProductData?.cost -
+                    particularProductData?.cost *
+                      (particularProductData?.discount / 100)).toFixed(2)}
+                </span>
+                {" "}
+                <CenteredText>₹{particularProductData?.cost}</CenteredText>{" "}
+              </p>
+            </div>
+
+              {/* complement about product */}
+              <div>
+              <p>{particularProductData?.description}</p>
+              <p>
+                "Your clothing line is a versatile gem that effortlessly
+                complements all types of wardrobe choices. Whether I'm dressing
+                casually, preparing for a special event, or selecting
+                professional attire, your products consistently deliver in
+                style, comfort, and quality. What sets your brand apart is its
+                remarkable ability to seamlessly blend with any outfit,
+                enhancing its overall appeal. Your commitment to versatility and
+                timeless design makes your clothing an ideal complement to every
+                fashion need, and I appreciate how your pieces have become an
+                essential part of my everyday wardrobe. In a world where
+                clothing preferences can be diverse and personal, your brand
+                stands out as a reliable choice.
+                <br />
+                <br />
+                Your dedication to delivering stylish, adaptable pieces ensures
+                that they effortlessly fit into my daily fashion choices,
+                reflecting my style and personality beautifully. Thank you for
+                consistently offering clothing that is not just a product but a
+                true complement to my fashion journey. Your brand is synonymous
+                with versatility and sophistication in my wardrobe, and I look
+                forward to many more stylish moments ahead with your exceptional
+                products."
+              </p>
+            </div>
+          </ScrollableParagraph>
         </div>
     </StyledDiv>
     </>
