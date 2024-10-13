@@ -17,6 +17,7 @@ import Logout from "./utils/navbar/Logout";
 import MiniDrawer from "./components/Seller/DashBoard";
 import CartHome from "./utils/Cart/CartHome";
 import PerticularProduct from "./pages/Products/PerticularProduct";
+import BuyingCartWithoutLogin from "./pages/Products/BuyingCartWithoutLogin";
 
 
 function App() {
@@ -39,6 +40,11 @@ function App() {
       <Route path="/loginseller" element={<LoginAs role={"Seller"}/>}/>
       <Route path="/registercustomer" element={<Signup role={"Customer"}/>}/>
       <Route path="/registerseller" element={<Signup role={"Seller"}/>}/>
+      <Route path="/buyingorcartingwithoutlogin" element={<BuyingCartWithoutLogin/>}/>
+      <Route
+            path="/particularproduct/:encodedImage/:productId"
+            element={<PerticularProduct/>}
+          />
       </Routes>
       </>
       )}  
