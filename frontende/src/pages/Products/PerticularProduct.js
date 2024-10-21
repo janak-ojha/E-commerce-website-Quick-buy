@@ -130,6 +130,18 @@ const PerticularProduct = () => {
 
   }
 
+  const handleRemoveProduct =() =>{
+
+  }
+
+  const CancelHandle =() =>{
+
+  }
+
+  const passingFunctionForDivRemove =() =>{
+    
+  }
+
 
   return (
     <>
@@ -269,9 +281,96 @@ const PerticularProduct = () => {
           </ScrollableParagraph>
         </div>
     </StyledDiv>
+    {clickButton && <StyledContainerr>
+      {selectedValue === "remove"?<><StyledContentt>
+        <StyledParagraph >Are you sure you want to remove this</StyledParagraph>
+        <StyledParagraph>product from your selling list?</StyledParagraph>
+      </StyledContentt>
+      <StyledButtonContainerr>
+        <Button variant="outlined" color="error" style={{width:"50px"}} onClick={handleRemoveProduct}>
+          Ok
+        </Button>
+        <Button variant="contained" color="success" style={{width:"80px"}} onClick={CancelHandle} >
+          Cancel
+        </Button>
+      </StyledButtonContainerr></>:<><StyledDivOfUpdateQuantity>
+      <AddProduct value={"updateproduct"} pData={particularProductData} passingFunctionForDivRemove={passingFunctionForDivRemove}/>
+      <>
+      </>
+      </StyledDivOfUpdateQuantity></> }
+
+    </StyledContainerr>}
     </>
   )
 }
 
 export default PerticularProduct
+
+export const StyledContainerr = styled.div`
+  position: fixed;
+  top: 50%; /* Adjust as needed */
+  left: 50%; /* Adjust as needed */
+  transform: translate(-50%, -50%);
+  background-color: rgba(255, 255, 255, 0.9); /* Adjust background color and opacity */
+  padding: 20px;
+  z-index: 1000;
+`;
+
+export const StyledContentt = styled.div`
+  /* Add any necessary styles for the content container */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction:column;
+  margin: 0px;
+  padding:0px;
+`;
+
+export const StyledButtonContainerr = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 30px;
+  flex-direction: row;
+  justify-content: space-around;
+`;
+
+export const StyledParagraph = styled.p`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap:0px;
+  margin:0;
+  padding:0;
+  font-size:20px;
+`
+
+const StyledDivOfUpdateQuantity = styled.div`
+  display:flex;
+  align-items: center;
+  justify-content: center;
+  gap:20px;
+  flex-direction:column;
+  max-height: 80vh; /* Set a maximum height for the div */
+  overflow-y: auto;
+  scroll:hidden;
+  /* Hide the scrollbar in WebKit browsers (Chrome, Safari) */
+  &::-webkit-scrollbar {
+    width: 0;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: transparent;
+  }
+
+  &::-webkit-scrollbar-track {
+    background-color: transparent;
+  }
+
+  /* Hide the scrollbar in Firefox */
+  scrollbar-width: thin;
+  scrollbar-color: transparent transparent;
+  margin-top:-20px;
+  
+`
 

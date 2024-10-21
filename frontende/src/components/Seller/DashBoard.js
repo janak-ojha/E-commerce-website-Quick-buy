@@ -21,6 +21,7 @@ import SellerHomepage from './component/SellerHomepage';
 import AddProduct from './component/AddProduct';
 import Products from './component/Products';
 import Orders from './component/Orders';
+import PerticularProduct from '../../pages/Products/PerticularProduct';
 
 const drawerWidth = 240;
 
@@ -174,6 +175,10 @@ export default function MiniDrawer() {
                         <Route path="/orders" element={<Orders/>} />
                         <Route path="/" element={<SellerHomepage />} />
                        <Route path="*" element={<Navigate to="/" />} />
+                       <Route
+                           path="/particularproduct/:encodedImage/:productId"
+                           element={<PerticularProduct/>}
+                        />
                     </Routes>
                 </Box>
     </Box>

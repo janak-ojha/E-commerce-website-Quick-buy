@@ -9,7 +9,7 @@ import ImageIcon from '@mui/icons-material/Image';
 import {BlueButton} from '../../../utils/ButtonStyles';
 import { useNavigate } from 'react-router-dom';
 
-const AddProduct = () => {
+const AddProduct = ( {value,pData,passingFunctionForDivRemove}) => {
   const navigate=useNavigate()
   const dispatch = useDispatch();
   const { currentUser, status, response, error } = useSelector(state => state.user);
